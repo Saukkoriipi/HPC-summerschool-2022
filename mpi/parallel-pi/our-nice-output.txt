@@ -1,0 +1,4 @@
+I am printing, my id is: 0
+Computing approximation to pi with N=840
+Using 2 MPI processes
+Approximate pi=3.1415927716925909 (exact pi=3.14159265)
