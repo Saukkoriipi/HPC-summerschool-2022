@@ -31,15 +31,15 @@ int main(int argc, char *argv[])
     init_buffers(sendbuf.data(), recvbuf.data(), 2 * NTASKS);
 
     /* Print data that will be sent */
-    print_buffers(printbuf.data(), sendbuf.data(), 2 * NTASKS);
+    print_buffers(printbuf.data(), sendbuf.data(), 2 * NTASKS);    
 
     /* TODO: use a single collective communication call (and maybe prepare
      *       some parameters for the call) */
-    MPI_Alltoall(sendbuf.data(), 2, MPI_INT, recvbuf.data(), 2, MPI_INT, MPI_COMM_WORLD);
+    MPI_Bcast(sendbuf.data(), 2*NTASKS, MPI_INT, 1, MPI_COMM_WORLD);
 
     /* Print data that was received */
     /* TODO: add correct buffer */
-    print_buffers(printbuf.data(), recvbuf.data(), 2 * NTASKS);
+    print_buffers(printbuf.data(), sendbuf.data(), 2 * NTASKS);
 
     MPI_Finalize();
     return 0;
@@ -63,11 +63,11 @@ void print_buffers(int *printbuffer, int *sendbuffer, int buffersize)
     int i, j, rank, ntasks;
 
     MPI_Gather(sendbuffer, buffersize, MPI_INT,
-               printbuffer, buffersize, MPI_INT, 0, MPI_COMM_WORLD);
+               printbuffer, buffersize, MPI_INT, 1, MPI_COMM_WORLD);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &ntasks);
 
-    if (rank == 0) {
+    if (rank == 1) {
         for (j = 0; j < ntasks; j++) {
             printf("Task %i:", j);
             for (i = 0; i < buffersize; i++) {
