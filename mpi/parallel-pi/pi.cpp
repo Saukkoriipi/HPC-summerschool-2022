@@ -1,13 +1,25 @@
 #include <cstdio>
 #include <cmath>
+#include <mpi.h>
 
 constexpr int n = 840;
 
 int main(int argc, char** argv)
 {
+  int myid, ntasks;
 
-  printf("Computing approximation to pi with N=%d\n", n);
+  MPI_Status status;
 
+  MPI_Init(&argc, &argv);
+  MPI_Comm_size(MPI_COMM_WORLD, &ntasks);
+  MPI_Comm_rank(MPI_COMM_WORLD, &myid);
+
+  if (0 == myid){
+    printf("Computing approximation to pi with N=%d\n", n);
+    printf("Using %d MPI processes\n", ntasks);
+  }
+
+  int chunksize = n/ntasks;
   int istart = 1;
   int istop = n;
 
