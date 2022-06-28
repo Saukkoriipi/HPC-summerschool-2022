@@ -5,6 +5,9 @@ int main(int argc, char **argv)
 {
     int rank;
     int array[8][8];
+    MPI_Datatype indexedtype;
+    int displs[4];
+    int blocklens[4];
     //TODO: Declare a variable storing the MPI datatype
 
     int i, j;
@@ -37,11 +40,26 @@ int main(int argc, char **argv)
         }
     }
 
+    // Create counts
+    for (i=0; i<4; i++){
+	blocklens[i] = i+1;
+	displs[i] = i+2*i*8;
+    }
+
     //TODO: Create datatype 
+    MPI_Type_indexed(4, blocklens, displs, MPI_INT, &indexedtype);
+    MPI_Type_commit(&indexedtype);
 
     //TODO: Send data
+    if(rank ==0){
+	MPI_Send(array, 1, indexedtype, 1, 1, MPI_COMM_WORLD);
+    } else if (rank == 1){
+	MPI_Recv(array, 1, indexedtype, 0, 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    }    
+
 
     //TODO: Free datatype
+    MPI_Type_free(&indexedtype);
 
     // Print out the result on rank 1
     if (rank == 1) {
