@@ -1,0 +1,8 @@
+srun: error: r01c02: task 3: Exited with exit code 2
+srun: launch/slurm: _step_signal: Terminating StepId=12264972.0
+slurmstepd: error: execve(): /scratch/project_2000745/training087/HPC-summerschool-2022/mpi/message-chain/cpp/./chain-persistent: No such file or directory
+slurmstepd: error: execve(): /scratch/project_2000745/training087/HPC-summerschool-2022/mpi/message-chain/cpp/./chain-persistent: No such file or directory
+slurmstepd: error: execve(): /scratch/project_2000745/training087/HPC-summerschool-2022/mpi/message-chain/cpp/./chain-persistent: No such file or directory
+slurmstepd: error: *** STEP 12264972.0 ON r01c01 CANCELLED AT 2022-06-28T19:34:45 ***
+slurmstepd: error: execve(): /scratch/project_2000745/training087/HPC-summerschool-2022/mpi/message-chain/cpp/./chain-persistent: No such file or directory
+srun: error: r01c01: tasks 0-2: Exited with exit code 2
