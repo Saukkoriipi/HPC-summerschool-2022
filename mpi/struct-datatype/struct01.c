@@ -37,17 +37,37 @@ int main(int argc, char *argv[])
   MPI_Aint disp[cnt], dist[2], lb, extent;
   int blocklen[cnt];
 
+  types[0] = MPI_FLOAT;
+  types[1] = MPI_INT;
+  types[2] = MPI_CHAR;
+  blocklen[0] = 3;
+  blocklen[1] = 1;
+  blocklen[2] = 2;
+  MPI_Get_address(&particles[0].coords, &disp[0]);
+  MPI_Get_address(&particles[0].coords, &disp[1]);
+  MPI_Get_address(&particles[0].coords, &disp[2]);
+  disp[2] -= disp[0];
+  disp[1] -= disp[0];
+  disp[0] = 0;
+  MPI_Type_create_struct(cnt, blocklen, disp, types, &particletype);
+  MPI_Type_commit(&particletype);
+
+
+
   // TODO: check extent (not really necessary on most platforms) 
+  //MPI_Type_free(&temptype);
+ 
 
   // communicate using the created particletype
   t1 = MPI_Wtime();
   if (myid == 0) {
     for (i=0; i < reps; i++) // multiple sends for better timing
-      // TODO: send  
-
+      // TODO: send
+      MPI_Send(particles, n, particletype, 1, i, MPI_COMM_WORLD);  
   } else if (myid == 1) {
     for (i=0; i < reps; i++)
       // TODO: receive
+      MPI_Recv(particles, n, particletype, 0, i, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
   }
 
