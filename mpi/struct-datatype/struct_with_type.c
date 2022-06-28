@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
   MPI_Type_create_struct(cnt, blocklen, disp, types, &particletype);
   MPI_Type_commit(&particletype);
 
-  /* check extent (not really necessary on most platforms) */
+  /* check extent (not really necessary on most platforms)
   MPI_Type_get_extent(particletype, &lb, &extent);
   MPI_Get_address(&particles[0], &dist[0]);
   MPI_Get_address(&particles[1], &dist[1]);
@@ -59,6 +59,7 @@ int main(int argc, char *argv[])
     MPI_Type_commit(&particletype);
     MPI_Type_free(&temptype);
   }
+  */
 
   /* communicate using the created particletype */
   t1 = MPI_Wtime();
