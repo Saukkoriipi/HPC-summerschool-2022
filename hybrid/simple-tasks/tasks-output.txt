@@ -1,0 +1,14 @@
+Array at the beginning: 0 0 0 0 
+Tasks created by thread: 0
+Task 3 executed by thread 0
+Task 1 executed by thread 1
+Task 0 executed by thread 2
+Task 2 executed by thread 0
+Array at the end: 2 1 0 0 
+Array at the beginning: 0 0 0 0 
+Tasks created by thread: 0
+Task 3 executed by thread 0
+Task 0 executed by thread 1
+Task 1 executed by thread 3
+Task 2 executed by thread 1
+Array at the end: 1 3 1 0 
