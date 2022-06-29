@@ -1,0 +1,4 @@
+fib(10)=55 
+calculation took 0.001654 sec
+fib(10)=55 
+calculation took 0.001975 sec
