@@ -1,0 +1,2 @@
+Reduction sum: 13.7587868405645395
+Reduction sum: 13.7587868405645395
