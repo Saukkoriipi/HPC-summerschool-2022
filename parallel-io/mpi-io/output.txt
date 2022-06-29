@@ -1,0 +1,4 @@
+Rank 1 read: first element 17 ; last element 32
+Rank 3 read: first element 49 ; last element 64
+Rank 0 read: first element 1 ; last element 16
+Rank 2 read: first element 33 ; last element 48
