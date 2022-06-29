@@ -1,0 +1,14 @@
+I'm thread 0 in process 0
+I'm thread 2 in process 0
+I'm thread 1 in process 0
+I'm thread 3 in process 0
+
+Provided thread support level: 1
+  0 - MPI_THREAD_SINGLE
+  1 - MPI_THREAD_FUNNELED
+  2 - MPI_THREAD_SERIALIZED
+  3 - MPI_THREAD_MULTIPLE
+I'm thread 2 in process 1
+I'm thread 0 in process 1
+I'm thread 3 in process 1
+I'm thread 1 in process 1
