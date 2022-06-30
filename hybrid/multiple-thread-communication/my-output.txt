@@ -1,5 +1,13 @@
-Rank 1 thread 3 received 3
+My thread number:  0 
+My thread number:  2 
+My thread number:  1 
+My thread number:  3 
 Rank 1 thread 1 received 1
-Rank 1 thread 2 received 2
 Rank 1 thread 0 received 0
+Rank 1 thread 2 received 2
+Rank 1 thread 3 received 3
+My thread number:  0 
+My thread number:  1 
 4 threads in master rank
+My thread number:  3 
+My thread number:  2 

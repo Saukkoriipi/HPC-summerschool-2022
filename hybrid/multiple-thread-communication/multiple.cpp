@@ -26,6 +26,11 @@ int main(int argc, char *argv[])
     nthreads = omp_get_num_threads();
     tid = omp_get_thread_num();
 
+   /* Number of threads (how many) */
+   //printf("num_threads:  %i \n", nthreads);
+   /* Id number of current thread */
+   printf("My thread number:  %i \n", tid);
+
     if (rank == 0) {
 #pragma omp single
         {
