@@ -1,0 +1,5 @@
+Rank 1 thread 3 received 3
+Rank 1 thread 1 received 1
+Rank 1 thread 2 received 2
+Rank 1 thread 0 received 0
+4 threads in master rank
