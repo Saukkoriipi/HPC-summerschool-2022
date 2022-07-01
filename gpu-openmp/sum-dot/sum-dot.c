@@ -12,20 +12,21 @@ int main(void)
         vecB[i] = vecA[i] * vecA[i];
     }
 
-    // TODO start: create a data region and offload the two computations
-    // so that data is kept in the device between the computations
+    double res = 0.0;
 
+#pragma omp target data map(to:vecA, vecB) map(from:vecC, res)
+  {
+#pragma omp target teams distribute parallel for
     for (int i = 0; i < NX; i++) {
         vecC[i] = vecA[i] + vecB[i];
     }
 
-    double res = 0.0;
-
+#pragma omp target teams distribute parallel for reduction(+:res)
     for (int i = 0; i < NX; i++) {
         res += vecC[i] * vecB[i];
     }
 
-    // TODO end
+  }
 
     double sum = 0.0;
     /* Compute the check value */
