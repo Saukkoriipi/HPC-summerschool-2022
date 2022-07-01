@@ -10,7 +10,7 @@
 #SBATCH --gres=gpu:v100:2
 #SBATCH --output=output.txt
 
-srun ./hello
+srun ./jacobi
 
 ## NOTES TO COMPILE AND LOAD GPU CODE:
 # module load nvhpc/21.9  nvhpc-mpi/openmpi-4.0.5
