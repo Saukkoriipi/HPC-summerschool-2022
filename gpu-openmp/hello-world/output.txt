@@ -1,0 +1,2 @@
+Number of available devices 2
+Running on device
