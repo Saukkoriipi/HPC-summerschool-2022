@@ -10,8 +10,8 @@
 #SBATCH --gres=gpu:v100:2
 #SBATCH --output=output.txt
 
-srun ./hello
+srun ./sum
 
 ## NOTES TO COMPILE AND LOAD GPU CODE:
 # module load nvhpc/21.9  nvhpc-mpi/openmpi-4.0.5
-# nvc -o hello hello.c -mp=gpu -gpu=cc70
+# nvc -o sum sum.c my_sum.c -mp=gpu -gpu=cc80
