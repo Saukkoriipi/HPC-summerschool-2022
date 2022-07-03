@@ -1,0 +1,3 @@
+total error: 0.000000
+  reference: 16.842000 at (42,42)
+     result: 16.842000 at (42,42)

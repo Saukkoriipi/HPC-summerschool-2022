@@ -4,6 +4,16 @@
 
 // TODO: add a device kernel that calculates y = a * x + y
 
+__global__ void saxpy_(int n, float a, float *x, float *y)
+{
+   int tid = threadIdx.x + blockIdx.x * blockDim.x;
+   int stride = gridDim.x * blockDim.x;
+   for (; tid<n; tid+=stride){
+	y[tid] += a*x[tid];
+   }
+}
+
+
 int main(void)
 {
     int i;
@@ -20,13 +30,27 @@ int main(void)
     }
 
     // TODO: allocate vectors x_ and y_ on the GPU
+    hipMalloc((void **) &x_, sizeof(float) * n);
+    hipMalloc((void **) &y_, sizeof(float) * n);
     // TODO: copy initial values from CPU to GPU (x -> x_ and y -> y_)
+    hipMemcpy(x_, x, sizeof(float)*n, hipMemcpyHostToDevice);
+    hipMemcpy(y_, y, sizeof(float)*n, hipMemcpyHostToDevice);
 
     // TODO: define grid dimensions
+    dim3 blocks(32);
+    dim3 threads(256);
     // TODO: launch the device kernel
-    hipLaunchKernelGGL(...);
+    hipLaunchKernelGGL(saxpy_, blocks, threads, 0, 0, n, a, x_, y_);
 
     // TODO: copy results back to CPU (y_ -> y)
+    hipMemcpy(y, y_, sizeof(float)*n, hipMemcpyDeviceToHost);
+
+    // Print reference and results
+    printf("reference: %f %f %f %f ... %f %f\n",
+            y_ref[0], y_ref[1], y_ref[2], y_ref[3], y_ref[n-2], y_ref[n-1]);
+    printf("   result: %f %f %f %f ... %f %f\n",
+            y[0], y[1], y[2], y[3], y[n-2], y[n-1]);
+
 
     // confirm that results are correct
     float error = 0.0;
