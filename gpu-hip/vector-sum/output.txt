@@ -1,0 +1,4 @@
+Found 2 GPU devices, using GPUs 0 and 1!
+
+Error sum = 0
+Time elapsed: 0.000113
