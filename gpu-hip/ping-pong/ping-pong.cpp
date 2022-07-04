@@ -71,11 +71,22 @@ void GPUtoGPUviaHost(int rank, double *hA, double *dA, int N, double &timer)
     //       sending them back to rank 0.
     if (rank == 0) {
         // TODO: Copy vector to host and send it to rank 1
+        hipMemcpy(hA, dA, sizeif(double)*N, hipMemcpyDeviceToHost);
+	MPI_Send(hA, N, MPI_DOUBLE, 1, 11, MPI_COMM_WORLD);
         // TODO: Receive vector from rank 1 and copy it to the device
+        MPI_Recv(hA, N, MPI_DOUBLE, 1, 12, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+	hipMemcpy(dA, hA, sizeof(double)*N, hipMemcpyHostToDevice);
     } else if (rank == 1) {
         // TODO: Receive vector from rank 0 and copy it to the device
+        MPI_Recv(hA, N, MPI_DOUBLE, 0, 11, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        hipMemcpy(dA, hA, sizeof(double) * N, hipMemcpyHostToDevice);
         // TODO: Launch kernel to increment values on the GPU
+        int blocksize = 128;
+        int gridsize = (N+blocksize-1)/blocksize;
+        add_kernel<<<blocksize, gridsize>>> (dA, N);
+	hipMemcpy(hA, dA, sizeof(double)*N, hipMemcpyDeviceToHost);
         // TODO: Copy vector to host and send it to rank 0
+        MPI_Send(hA, N, MPI_DOUBLE, 0, 12, MPI_COMM_WORLD);
     }
 
     stop = MPI_Wtime();
@@ -93,11 +104,19 @@ void GPUtoGPUdirect(int rank, double *dA, int N, double &timer)
     //       from GPU memory using HIP-aware MPI.
     if (rank == 0) {
         // TODO: Send vector to rank 1
+        MPI_Send(dA, N, MPI_DOUBLE, 1, 11, MPI_COMM_WORLD);
         // TODO: Receive vector from rank 1
+        MPI_Recv(dA, N, MPI_DOUBLE, 1, 12, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     } else if (rank == 1) {
+	int blocksize = 128;
+	int gridsize = (N + blocksize - 1) / blocksize;
         // TODO: Receive vector from rank 0
+        MPI_Recv(dA, N, MPI_DOUBLE, 0, 11, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
         // TODO: Launch kernel to increment values on the GPU
+        add_kernel<<<blocksize, gridsize>>> (dA, N);
+	hipStreamSynchronize(0);
         // TODO: Send vector to rank 0
+        MPI_Send(dA, N, MPI_DOUBLE, 0, 12, MPI_COMM_WORLD);
     }
 
     stop = MPI_Wtime();
